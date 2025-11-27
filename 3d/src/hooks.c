@@ -65,6 +65,7 @@ int	close_window(t_data *data)
 
 int	key_handler(int key, t_data *data)
 {
+	printf("keycode: %d\n", key);
 	if (key != ESC)
 	{
 		if (key == KEY_W || key == KEY_S)
