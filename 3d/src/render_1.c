@@ -49,11 +49,11 @@ void	draw_floor_and_ceiling(t_data *data)
 {
 	int	x;
 	int	y;
-	int	end;
+	// int	end;
 
 	x = -1;
 	y = -1;
-	end = data->buf_size / 2;
+	// end = data->buf_size / 2;
 	while (++x < SCREEN_WIDTH)
 	{
 		while (++y < SCREEN_HEIGHT / 2)
