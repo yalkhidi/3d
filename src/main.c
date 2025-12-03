@@ -6,7 +6,7 @@
 /*   By: yalkhidi <yalkhidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 19:38:42 by omaimaqaroo       #+#    #+#             */
-/*   Updated: 2025/12/01 18:20:32 by yalkhidi         ###   ########.fr       */
+/*   Updated: 2025/12/02 11:22:31 by yalkhidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	print_content(&game.resources);
 	init_game(&game);
+	mlx_loop_hook(game.screen.mlx, calculate, &game);
 	mlx_loop(game.screen.mlx);
 	// clean_resources(&game.resources);
 }

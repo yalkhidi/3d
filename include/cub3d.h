@@ -6,7 +6,7 @@
 /*   By: yalkhidi <yalkhidi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/17 19:40:22 by omaimaqaroo       #+#    #+#             */
-/*   Updated: 2025/12/01 18:12:18 by yalkhidi         ###   ########.fr       */
+/*   Updated: 2025/12/03 18:40:53 by yalkhidi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@
 # define KEY_D 2
 # define KEY_RIGHT_ARROW 124
 # define KEY_LEFT_ARROW 123
+#define MOVE_SPEED 0.05
+#define ROT_SPEED  0.05
+
 
 //=====================Row list struct==========================
 typedef struct s_row_list
@@ -81,19 +84,19 @@ typedef struct s_map
 
 typedef struct s_ray
 {
-	double	ray_dir_x;
-	double	ray_dir_y;
-	double	side_dist_x;
-	double	side_dist_y;
-	double	delta_dist_x;
-	double	delta_dist_y;
-	double	perp_wall_dist;
-	int		map_x;
-	int		map_y;
-	int		step_x;
-	int		step_y;
-	int		hit;
-	int		side;
+	double	ray_dir_x;// direction of the ray x component
+	double	ray_dir_y;// direction of the ray along the y axis (up down)
+	double	side_dist_x; //
+	double	side_dist_y; //
+	double	delta_dist_x;// how far the ray must travel to cross one grid square
+	double	delta_dist_y;//
+	double	wall_dist; //
+	int		map_x;// 
+	int		map_y;//
+	int		step_x; // which direction the ray is moving along the x axis(left, right)
+	int		step_y; // which direction the ray is moving aalong the y axis (up, down)
+	int		hit; // was a wall hit during dda
+	int		side; //which wall was hit vertical (0) or horizontal (1)
 }	t_ray;
 
 typedef struct s_screen
@@ -110,6 +113,17 @@ typedef struct s_screen
 	int		buf_size;
 }	t_screen;
 
+typedef struct s_texture
+{
+	void	*img;
+	char	*addr;
+	int		width;
+	int		height;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}	t_texture;
+
 typedef struct s_game
 {
 	t_player	player;
@@ -117,6 +131,11 @@ typedef struct s_game
 	t_ray ray;
 	t_screen	screen;
 	t_resources	resources;
+	t_texture	textures[4]; // North, East, South, West
+	long time;
+	long old_time;
+	double move_speed;
+	double rotate_speed;
 }	t_game;
 
 //=====================Function prototypes==========================
@@ -134,5 +153,5 @@ void					init_resources(t_resources *resources);
 
 int						clean_and_print_error(char *msg, t_resources *resources, int ret_val);
 void	init_game(t_game *game);
-
+int	calculate(t_game *game);
 #endif
